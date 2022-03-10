@@ -8,3 +8,5 @@ Import a file containing transactions, then aplication parses it and displays da
 Application assigns transactions to categories automatically.
 If a transaction is not known yet, it assigned to the 'Define me' category.
 If there are no suitable category exist, it can be created just in place.
+
+try commit statuses
