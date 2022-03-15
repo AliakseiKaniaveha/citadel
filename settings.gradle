@@ -8,4 +8,3 @@
  */
 
 rootProject.name = 'ex-ray'
-include('app')
