@@ -14,6 +14,6 @@ class AppTest {
 
   @Test
   void appHasAGreeting() {
-    assertThat(testee.getGreeting(), equalTo("Hello!"));
+    assertThat(testee.getGreeting(), equalTo("Hello!1"));
   }
 }
