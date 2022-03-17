@@ -10,6 +10,9 @@ plugins {
     //Spring Boot
     id 'org.springframework.boot' version '2.6.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+
+    //Ide IDE perks for Gradle
+    id 'idea'
 }
 
 repositories {
@@ -17,22 +20,63 @@ repositories {
     mavenCentral()
 }
 
+
+sourceSets {
+    uiTest {
+        java {
+            srcDirs = ['src/test-ui/java']
+        }
+    }
+}
+
+idea {
+    module {
+        testSourceDirs += sourceSets.uiTest.java.srcDirs
+    }
+}
+
 dependencies {
+    /* Application ****************************************************************************************************/
     //Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-    // JUnit essentials
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
-    testImplementation 'org.hamcrest:hamcrest:2.2'
+    /* Unit Tests *****************************************************************************************************/
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'  //junit5
+    testImplementation 'org.hamcrest:hamcrest:2.2'  //powerful assertions
 
-    //Spring - for integrated unit tests
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    /* Integration Tests **********************************************************************************************/
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'  //Spring Context in tests
+
+    /* Functional Tests ***********************************************************************************************/
+    //tbd
+
+    /* UI Tests *******************************************************************************************************/
+    uiTestImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'    //junit5
+    //Selenide
+    uiTestImplementation 'com.codeborne:selenide:6.3.4'
+    uiTestImplementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
+    uiTestImplementation 'org.seleniumhq.selenium:selenium-api:4.1.2'
+    uiTestImplementation 'org.seleniumhq.selenium:selenium-remote-driver:4.1.2'
+    uiTestImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.2'
 }
 
 application {
     // Define the main class for the application.
     mainClass = 'kaniaveha.aliaksei.exray.App'
+}
+
+tasks.register('uiTest', Test) {
+    description = 'Runs UI tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.uiTest.output.classesDirs
+    classpath = sourceSets.uiTest.runtimeClasspath
+
+    useJUnitPlatform()
+
+    //propagate system properties so args of the form -D<key>=<val> can be used in tests
+    systemProperties(System.getProperties())
 }
 
 tasks.named('test') {

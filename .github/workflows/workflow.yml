@@ -1,5 +1,17 @@
 # Continuous Integration Pipeline for the project
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+#
+# ssh to runner: just drop the step below to a place where you need to intervene;
+# details: https://github.com/marketplace/actions/debugging-with-ssh
+#
+##debug begin
+##by this step an SSH session will be created
+##to continue workflow either just close the session or create an empty file with the name `continue` either in the
+##root directory or in the workspace directory (`touch continue` or `sudo touch /continue`)
+#- name: Setup upterm session
+#  uses: lhotari/action-upterm@v1
+##debug end
+#
 
 name: CI
 
@@ -9,10 +21,8 @@ on:
 
 jobs:
   build:
-
     name: Build
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -25,3 +35,31 @@ jobs:
         with:
           gradle-version: 7.2
           arguments: build --info
+
+  ui-tests:
+    name: UI tests
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+      - name: Start Application
+        run: ./gradlew run &
+      - name: Install Web Browser
+        run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          && sudo dpkg -i google-chrome*.deb
+          && google-chrome-stable -version
+      - name: Run UI Tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+          arguments: uiTest --info -Dselenide.headless=true
