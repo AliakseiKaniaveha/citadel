@@ -4,16 +4,13 @@
 package kaniaveha.aliaksei.exray;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
+@SpringBootTest
 class AppTest {
 
-  App testee = new App();
-
   @Test
-  void appHasAGreeting() {
-    assertThat(testee.getGreeting(), equalTo("Hello!"));
+  void contextLoads() {
+    // no explicit assertions - test fails if context cannot be loaded, otherwise it's just green
   }
 }
