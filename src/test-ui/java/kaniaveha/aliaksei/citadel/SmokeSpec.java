@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.exray;
+package kaniaveha.aliaksei.citadel;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;

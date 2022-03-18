@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.exray;
+package kaniaveha.aliaksei.citadel;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
