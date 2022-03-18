@@ -1,5 +1,6 @@
 ![](logo.png)
 
+test
 # The Citadel Project
 
 An opinionated view on Java-based application anti-defect defence lines - toi be rephrazed.
