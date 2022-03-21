@@ -2,30 +2,80 @@
 
 # The Citadel Project
 
-An opinionated view on Java-based application anti-defect defence lines - toi be rephrazed.
+This project is an opinionated view on a way of developing Java-based applications. Though, concepts are not
+Java-specific, tools and showcases are, so have to have this caveat.
 
-## Description
+We believe in **power of automated tests** and putting them at the forefront. We believe that treating tests as a must
+gives us not only obvious benefits like improved maintainability and decreased support costs, but forces a project to be
+in an extremely healthy and competitive state - software products implemented using this approach gain such advantages
+as the **shortest** possible **time to market**, ability to **deliver** changes to production **anytime**, ability to
+**run experiments** quickly and **safely**.
 
-Aliquam felis magna, vestibulum a ultricies ut, faucibus nec est. Morbi feugiat pretium lacus, sed pretium odio
-vestibulum a. Vestibulum efficitur varius dictum. Integer ipsum augue, pellentesque eget venenatis a, fermentum id dui.
-Sed velit enim, tempus non nibh quis, viverra porttitor felis. Mauris id pretium metus, vitae lobortis orci. Curabitur
-eleifend ligula sit amet massa tincidunt, a sollicitudin velit rhoncus. Sed a neque dignissim, tempor eros eget,
-accumsan ante. Nullam eget velit ut diam ultrices pretium rutrum dignissim urna. Nullam ultrices fermentum mauris ut
-aliquet. Cras in velit arcu.
+There is a detailed [documentation](doc/index.md) of the application functionality and design, but instead you can just start using it and assess if it's intuitive enough - https://to.be.defined
 
-### Topic
+Our view on how to actually implement it and other details are right after that line.
 
-Quisque lectus nibh, porta et euismod nec, malesuada non mauris. Proin lobortis malesuada quam nec lacinia. Vestibulum
-faucibus luctus nulla at venenatis. Vestibulum et justo dui. Suspendisse porttitor placerat mauris at fringilla.
-Phasellus ex magna, egestas id faucibus vel, sagittis in nunc. Sed elementum sagittis mollis. Suspendisse porta mi ut
-velit venenatis, quis interdum velit maximus. Morbi a nisl ac dolor sagittis gravida. Proin dui nisl, congue id leo ut,
-fringilla tempus nibh. Maecenas vulputate mi magna, ut bibendum nisi lobortis at. Morbi sit amet ante vel diam tincidunt
-auctor.
+## Goals
 
-### Another Topic
+This project has two goals:
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elit mi, finibus eu consectetur ac, bibendum ac
-risus.Morbi accumsan sem eu enim venenatis, eu ultrices massa laoreet. Duis tempus maximus sem, condimentum scelerisque
-ligula blandit non. Integer tempus, justo at ullamcorper laoreet, elit lectus blandit purus, vel pellentesque lacus
-lacus nec dui. Vestibulum eleifend molestie ex. Aliquam erat volutpat. Sed in eros placerat, viverra arcu convallis,
-fermentum metus.
+* **Share our ideas.** _Talk is cheap. Show me the code._ - L.Torvalds. We believe that for a software engineer showing
+  the code is the easiest and quickest way to get the message.
+* **Proof our ideas.** We want to have a handbook containing set of **working** examples demonstrating how to incorporate
+  CI and all layers of the Test Pyramid dealing with one or another technology.
+
+## Beliefs
+
+Our view on a way of developing modern software applications is in essence the following few principles:
+
+* **Automated Tests.** Each application function is covered by set automated tests (see Test Pyramid). Code
+  changes that lacks of tests shall not pass code review.
+* **Clean Code.** Code is clean in terms of [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)).
+* **Continuous Integration.** There is no chance to break already working function as each incoming change
+  verified **automatically**. Breaking changes shall not pass.
+
+## Benefits
+
+* _Application is 'evergreen'._ There is no chance to break already working function as each incoming change verified
+  automatically.
+* _Anyone can contribute safely._ There is no chance to break... Well, you get it. As an outcome - friendly and
+  comfortable working environment assuming no overtimes and late night stays.
+* _Anyone can contribute quickly._ All you need is access to the repository, afterwards you can get running application
+  instance by running a single command. All functions are documented in form of automated functional tests and, what is
+  even more important, all configurations/pre-sets required to reach a function are already in place (it has to be to
+  fulfill tests on CI) - so **any function** available for debug/investigation **immediately**. The same is valid for
+  application configuration settings and external dependencies.
+* _Refactoring of any complexity is encouraged and welcome._ No chance to break anything, right? You want to clean up
+  some code? New feature begs for re-design first? Or you'd like just raise a version of a library and get the latest
+  perks? Just fire away - you don't even need to validate your changes locally (not speaking of 'full regression run')
+  before creating a pull-request.
+* _Experimenting is safe and encouraged._ Pretty much connected to the previous one. Want to replace your ORM? Database
+  vendor? Try the latest Java version? Just make a change and get feedback on how many functions are failed. Oops, it
+  seems you just have completed a PoC task :)
+
+## Test Pyramid
+
+TBD - describe on high-level the 4 levels of automated tests, difference between them, touch contract tests.
+
+### Unit Tests
+
+TBD
+
+### Integrated Unit Tests
+
+TBD
+
+### Functional Tests
+
+TBD
+
+### UI Tests
+
+TBD
+
+## Inspired by
+
+* [Robert C. Martin - The Principles of OOD (SOLID and more)](http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod)
+* [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+* [Kent Beck - Test Driven Development: By Example](https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530)
+* [Steve Freeman - Growing Object-Oriented Software, Guided by Tests](https://www.amazon.com/Growing-Object-Oriented-Software-Guided-Tests/dp/0321503627) 
