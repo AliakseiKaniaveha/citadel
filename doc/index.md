@@ -10,6 +10,7 @@ It maps all tests run against the app to application units. There are to main fu
 * Show which units are affected by an individual test (or a set of tests filtered by package, type or criteria)
 * Show which tests affect a unit.
 
-##Details
+## Details
+
 * [Functionality](functionality/functionality.md)
 * [Application Design](design/application_design.md)
