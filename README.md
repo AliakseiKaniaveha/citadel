@@ -73,7 +73,7 @@ TBD
 
 TBD
 
-## Inspired by
+## Based on
 
 * [Robert C. Martin - The Principles of OOD (SOLID and more)](http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod)
 * [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
