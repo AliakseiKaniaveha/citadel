@@ -82,8 +82,20 @@ jobs:
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
+    if: always()
     needs:
       - unit-tests
       - ui-tests
     steps:
-      - run: echo 'A single point used as a Quality Gate gathering all subsequent verifications, to be used as required status check for a pull-request'
+      - name: Quality Checks Report
+        run: |
+          echo "Unit Tests: ${{ toJSON(needs.unit-tests) }}"
+          echo "UI Tests: ${{ toJSON(needs.ui-tests) }}"
+      - name: Require All Passed
+        if: ${{
+          needs.unit-tests.result != 'success' ||
+          needs.ui-tests.result != 'success'
+          }}
+        run: |
+          echo "Check outpup of the step above - one or more quality checks failed"
+          exit 1

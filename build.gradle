@@ -63,7 +63,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'kaniaveha.aliaksei.exray.App'
+    mainClass = 'kaniaveha.aliaksei.citadel.App'
 }
 
 tasks.register('uiTest', Test) {
