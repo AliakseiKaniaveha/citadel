@@ -8,6 +8,7 @@ plugins {
     id 'application'
 
     //Spring Boot
+    //doesn't applied to all configurations as we need it for implementation only
     id 'org.springframework.boot' version '2.6.4' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 
@@ -18,6 +19,7 @@ plugins {
 dependencyManagement {
     implementation {
         imports {
+            //the org.springframework.boot BOM
             mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
         }
     }
@@ -30,6 +32,20 @@ repositories {
 
 
 sourceSets {
+    /*main {
+        //application sources
+        //it's default for gradle so no need to define explicitly
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }*/
+    /*test {
+        //main's unit tests
+        //it's default for gradle so no need to define explicitly
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }*/
     uiTest {
         java {
             srcDirs = ['src/test-ui/java']
@@ -70,6 +86,11 @@ application {
     mainClass = 'kaniaveha.aliaksei.citadel.App'
 }
 
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+
 tasks.register('uiTest', Test) {
     description = 'Runs UI tests.'
     group = 'verification'
@@ -81,9 +102,4 @@ tasks.register('uiTest', Test) {
 
     //propagate system properties so args of the form -D<key>=<val> can be used in tests
     systemProperties(System.getProperties())
-}
-
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
 }
