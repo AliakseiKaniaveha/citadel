@@ -2,6 +2,17 @@
 
 # The Citadel Project
 
+Our view on a way of developing modern software applications is in essence the following few principles:
+
+* **Automated Tests.** Each application function is covered by set automated tests (see Test Pyramid). Code changes that
+  lacks of tests shall not pass code review.
+* **Clean Code.** Code is clean in terms
+  of [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882))
+  .
+* **Continuous Integration.** There is no chance to break already working function as each incoming change verified **
+  automatically**. Breaking changes shall not pass.
+
+## Description
 This project is an opinionated view on a way of developing Java-based applications. Though, concepts are not
 Java-specific, tools and showcases are, so have to have this caveat.
 
@@ -11,7 +22,8 @@ in an extremely healthy and competitive state - software products implemented us
 as the **shortest** possible **time to market**, ability to **deliver** changes to production **anytime**, ability to
 **run experiments** quickly and **safely**.
 
-There is a detailed [documentation](doc/index.md) of the application functionality and design, but instead you can just start using it and assess if it's intuitive enough - https://to.be.defined
+There is a detailed [documentation](doc/index.md) of the application functionality and design, but instead you can just
+start using it and assess if it's intuitive enough - https://to.be.defined
 
 Our view on how to actually implement it and other details are right after that line.
 
@@ -21,18 +33,8 @@ This project has two goals:
 
 * **Share our ideas.** _Talk is cheap. Show me the code._ - L.Torvalds. We believe that for a software engineer showing
   the code is the easiest and quickest way to get the message.
-* **Proof our ideas.** We want to have a handbook containing set of **working** examples demonstrating how to incorporate
-  CI and all layers of the Test Pyramid dealing with one or another technology.
-
-## Beliefs
-
-Our view on a way of developing modern software applications is in essence the following few principles:
-
-* **Automated Tests.** Each application function is covered by set automated tests (see Test Pyramid). Code
-  changes that lacks of tests shall not pass code review.
-* **Clean Code.** Code is clean in terms of [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)).
-* **Continuous Integration.** There is no chance to break already working function as each incoming change
-  verified **automatically**. Breaking changes shall not pass.
+* **Proof our ideas.** We want to have a handbook containing set of **working** examples demonstrating how to
+  incorporate CI and all layers of the Test Pyramid dealing with one or another technology.
 
 ## Benefits
 
