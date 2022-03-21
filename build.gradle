@@ -8,11 +8,19 @@ plugins {
     id 'application'
 
     //Spring Boot
-    id 'org.springframework.boot' version '2.6.4'
+    id 'org.springframework.boot' version '2.6.4' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 
     //Ide IDE perks for Gradle
     id 'idea'
+}
+
+dependencyManagement {
+    implementation {
+        imports {
+            mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+        }
+    }
 }
 
 repositories {
@@ -55,10 +63,6 @@ dependencies {
     uiTestImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'    //junit5
     //Selenide
     uiTestImplementation 'com.codeborne:selenide:6.3.4'
-    uiTestImplementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
-    uiTestImplementation 'org.seleniumhq.selenium:selenium-api:4.1.2'
-    uiTestImplementation 'org.seleniumhq.selenium:selenium-remote-driver:4.1.2'
-    uiTestImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.2'
 }
 
 application {
