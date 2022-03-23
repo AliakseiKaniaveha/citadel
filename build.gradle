@@ -4,7 +4,7 @@
  */
 
 plugins {
-    // Apply the application plugin to build and run Java app
+    //Apply the application plugin to build and run Java app
     id 'application'
 
     //Spring Boot

@@ -9,7 +9,7 @@ Our view on a way of developing modern software applications is in essence the f
 * **Clean Code.** Code is clean in terms
   of [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882))
   .
-* **Continuous Integration.** There is no chance to break already working function as each incoming change verified
+* **Quality Gates.** There is no chance to break already working function as **each** incoming change verified
   **automatically**. Breaking changes shall not pass.
 
 ## Description
