@@ -20,9 +20,26 @@ on:
     branches: [ master ]
 
 jobs:
+  is-bypassed-check:
+    name: Bypass Check
+    runs-on: ubuntu-latest
+    outputs:
+      is-bypassed: ${{ steps.check-if-bypassed.outputs.is-bypassed }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: changed-files
+        uses: tj-actions/changed-files@v18.4
+      - name: Is bypassed
+        id: check-if-bypassed
+        if: contains(steps.changed-files.outputs.all_changed_files, '.github/workflows/quality_gates.skip.reasons')
+        run: |
+          echo "::set-output name=is-bypassed::true"
+          echo "Quality Gates bypassed"
   build:
     name: Build
     runs-on: ubuntu-latest
+    needs: is-bypassed-check
+    if: needs.is-bypassed-check.outputs.is-bypassed != 'true'
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -80,21 +97,26 @@ jobs:
           gradle-version: 7.2
           arguments: uiTest --info -Dselenide.headless=true
   quality-gate:
-    name: Quality Gate
+    name: Go/No-Go
     runs-on: ubuntu-latest
     if: always()
     needs:
+      - is-bypassed-check
       - unit-tests
       - ui-tests
     steps:
-      - name: Quality Checks Report
+      - name: Quality Gates Report
         run: |
           echo "Unit Tests: ${{ toJSON(needs.unit-tests) }}"
           echo "UI Tests: ${{ toJSON(needs.ui-tests) }}"
-      - name: Require All Passed
+      - name: Quality Gates bypassed
+        if: ${{ needs.is-bypassed-check.outputs.is-bypassed == 'true' }}
+        run: echo "Quality Gates bypassed, check quality_gates.skip.reasons content for reasoning"
+      - name: Require all Quality Gates passed
         if: ${{
-          needs.unit-tests.result != 'success' ||
-          needs.ui-tests.result != 'success'
+          needs.is-bypassed-check.outputs.is-bypassed != 'true' &&
+          (needs.unit-tests.result != 'success' ||
+          needs.ui-tests.result != 'success')
           }}
         run: |
           echo "Check outpup of the step above - one or more quality checks failed"
