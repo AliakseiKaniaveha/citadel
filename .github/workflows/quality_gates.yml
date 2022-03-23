@@ -13,7 +13,7 @@
 ##debug end
 #
 
-name: CI
+name: Quality Gates
 
 on:
   pull_request:
