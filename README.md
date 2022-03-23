@@ -19,7 +19,7 @@ tests** . Though, concepts are not Java-specific, tools and showcases are, so ha
 
 We are putting automated tests at the forefront. We believe that treating tests as a must gives us not only obvious
 benefits like improved maintainability and decreased support costs, but forces a project to be in an extremely healthy
-and competitive state - see Benefits section.
+and competitive state - see [Benefits](#benefits) section.
 
 An application itself is _to be formulted_ - [documentation](doc/index.md). 
 
