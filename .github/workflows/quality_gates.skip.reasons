@@ -1,0 +1,10 @@
+If you are such a badass cowboy thinking you can just make a blind shot and merge your changes bypassing the Quality
+Gates, well, I would STRONGLY recommend you not to do that.
+
+If you are 101% sure your changes are safe and you want to merge your changes bypassing the Quality Gates, well, I would
+STRONGLY recommend you not to do that.
+
+Only if you do some non-code related changes, like readme updates, documentation or simple cosmetics like fixing
+misprints in comments, well, that might be the case and make sense. In this case just drop a line with explanation why
+you are going to skip verification right away in this file and QG run would be just marked as green. But even in this
+case act with CAUTION and make sure master is still stable after the merge!
