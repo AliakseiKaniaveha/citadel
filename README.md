@@ -2,30 +2,26 @@
 
 # The Citadel Project
 
-Our view on a way of developing modern software applications is in essence the following few principles:
+We do believe in:
 
 * **Automated Tests.** Each application function is covered by set automated tests (see Test Pyramid). Code changes that
   lacks of tests shall not pass code review.
-* **Clean Code.** Code is clean in terms
-  of [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882))
+* **Clean Code.** In terms
+  of [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
   .
-* **Quality Gates.** There is no chance to break already working function as **each** incoming change verified
+* **Continuous Integration.** There is no chance to break already working function as **each** incoming change verified
   **automatically**. Breaking changes shall not pass.
 
 ## Description
-This project is an opinionated view on a way of developing Java-based applications. Though, concepts are not
-Java-specific, tools and showcases are, so have to have this caveat.
 
-We believe in **power of automated tests** and putting them at the forefront. We believe that treating tests as a must
-gives us not only obvious benefits like improved maintainability and decreased support costs, but forces a project to be
-in an extremely healthy and competitive state - software products implemented using this approach gain such advantages
-as the **shortest** possible **time to market**, ability to **deliver** changes to production **anytime**, ability to
-**run experiments** quickly and **safely**.
+This project is an opinionated view on a way of developing Java-based applications leveraging **the power of automated
+tests** . Though, concepts are not Java-specific, tools and showcases are, so have to have this caveat.
 
-There is a detailed [documentation](doc/index.md) of the application functionality and design, but instead you can just
-start using it and assess if it's intuitive enough - https://to.be.defined
+We are putting automated tests at the forefront. We believe that treating tests as a must gives us not only obvious
+benefits like improved maintainability and decreased support costs, but forces a project to be in an extremely healthy
+and competitive state - see Benefits section.
 
-Our view on how to actually implement it and other details are right after that line.
+An application itself is _to be formulted_ - [documentation](doc/index.md). 
 
 ## Goals
 
