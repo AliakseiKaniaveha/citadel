@@ -14,12 +14,12 @@ public class AppWebController {
     return "index";
   }
 
-  /** just for testing, will be removed soon */
-  @GetMapping("/anotherPage")
-  public String anotherPage(
-      @RequestParam(name = "name", required = false, defaultValue = "World") String name,
+  @GetMapping("/graph")
+  public String graph(
+      @RequestParam(name = "graphContent", required = false, defaultValue = "graph stub")
+          String name,
       Model model) {
-    model.addAttribute("name", name);
-    return "anotherPage";
+    model.addAttribute("graphContent", name);
+    return "graph";
   }
 }

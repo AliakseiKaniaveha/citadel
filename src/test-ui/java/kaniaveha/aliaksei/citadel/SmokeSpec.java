@@ -19,15 +19,15 @@ public class SmokeSpec {
 
   @Test
   void smokeTest() {
-    //when landing page loaded
+    // when landing page loaded
     open("/");
 
-    //then link to another page displayed
-    SelenideElement linkToAnotherPage = $(By.linkText("another page"));
+    // then link to graph displayed
+    SelenideElement linkToGraph = $(By.id("navigate-to-graph"));
 
-    //and it navigates to another page
-    linkToAnotherPage.click();
-    SelenideElement anotherPageContent = $(By.tagName("body"));
-    anotherPageContent.shouldHave(text("Hello, world!"));
+    // and it navigates to another page
+    linkToGraph.click();
+    SelenideElement graphPageContent = $(By.tagName("body"));
+    graphPageContent.shouldHave(text("This is graph stub"));
   }
 }
