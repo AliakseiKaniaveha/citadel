@@ -69,8 +69,25 @@ jobs:
         with:
           gradle-version: 7.2
           arguments: test --info
-  ui-tests:
-    name: UI tests
+  integrated-unit-tests:
+    name: Integrated Unit Tests
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Run Tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+          arguments: integratedUnitTest --info
+  ui-web-tests:
+    name: Web UI Tests
     runs-on: ubuntu-latest
     needs:
       - build
@@ -85,17 +102,18 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.2
-      - name: Start Application
-        run: ./gradlew run &
+      - name: Run Application in container
+        run: ./gradlew runInContainer --info
       - name: Install Web Browser
-        run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          && sudo dpkg -i google-chrome*.deb
-          && google-chrome-stable -version
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome*.deb
+          google-chrome-stable -version
       - name: Run Tests
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.2
-          arguments: uiTest --info -Dselenide.headless=true
+          arguments: uiWebTest --info -Dselenide.headless=true
   quality-gate:
     name: Go/No-Go
     runs-on: ubuntu-latest
@@ -103,12 +121,14 @@ jobs:
     needs:
       - is-bypassed-check
       - unit-tests
-      - ui-tests
+      - integrated-unit-tests
+      - ui-web-tests
     steps:
       - name: Quality Gates Report
         run: |
           echo "Unit Tests: ${{ toJSON(needs.unit-tests) }}"
-          echo "UI Tests: ${{ toJSON(needs.ui-tests) }}"
+          echo "Unit Tests: ${{ toJSON(needs.integrated-unit-tests) }}"
+          echo "UI-Web Tests: ${{ toJSON(needs.ui-web-tests) }}"
       - name: Quality Gates bypassed
         if: ${{ needs.is-bypassed-check.outputs.is-bypassed == 'true' }}
         run: echo "Quality Gates bypassed, check quality_gates.skip.reasons content for reasoning"
@@ -116,7 +136,8 @@ jobs:
         if: ${{
           needs.is-bypassed-check.outputs.is-bypassed != 'true' &&
           (needs.unit-tests.result != 'success' ||
-          needs.ui-tests.result != 'success')
+          needs.integrated-unit-tests.result != 'success' ||
+          needs.ui-web-tests.result != 'success')
           }}
         run: |
           echo "Check outpup of the step above - one or more quality checks failed"

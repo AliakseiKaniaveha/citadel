@@ -23,11 +23,11 @@ public class SmokeSpec {
     open("/");
 
     // then link to graph displayed
-    SelenideElement linkToGraph = $(By.id("navigate-to-graph"));
+    SelenideElement linkToGraph = $(By.id("navigate-to-classes-graph"));
 
     // and it navigates to another page
     linkToGraph.click();
     SelenideElement graphPageContent = $(By.tagName("body"));
-    graphPageContent.shouldHave(text("This is graph stub"));
+    graphPageContent.shouldHave(text("This is classes graph"));
   }
 }

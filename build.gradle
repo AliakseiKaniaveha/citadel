@@ -4,7 +4,7 @@
  */
 
 plugins {
-    //Apply the application plugin to build and run Java app
+    //Apply the application plugin to build and distribute Java app
     id 'application'
 
     //Spring Boot
@@ -46,16 +46,40 @@ sourceSets {
             srcDirs = ['src/test/java']
         }
     }*/
-    uiTest {
+    integratedUnitTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
         java {
-            srcDirs = ['src/test-ui/java']
+            srcDirs = ['src/test-integrated-unit/java']
+        }
+        resources {
+            srcDirs = ['src/test-integrated-unit/resources']
+        }
+    }
+    systemTest {
+        java {
+            srcDirs = ['src/test-system/java']
+        }
+    }
+    uiWebTest {
+        java {
+            srcDirs = ['src/test-ui-web/java']
         }
     }
 }
 
+configurations {
+    integratedUnitTestImplementation.extendsFrom testImplementation
+    integratedUnitTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
 idea {
     module {
-        testSourceDirs += sourceSets.uiTest.java.srcDirs
+        //testSourceDirs += sourceSets.test.java.srcDirs - unit tests are defined by default
+        testSourceDirs += sourceSets.integratedUnitTest.java.srcDirs
+        testResourceDirs += sourceSets.integratedUnitTest.resources.srcDirs
+        testSourceDirs += sourceSets.systemTest.java.srcDirs
+        testSourceDirs += sourceSets.uiWebTest.java.srcDirs
     }
 }
 
@@ -68,6 +92,13 @@ dependencies {
     //Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    //Graphviz
+    implementation 'guru.nidi:graphviz-java:0.18.1'
+    //Byte Code Engineering
+    implementation 'org.apache.maven.shared:maven-dependency-analyzer:1.12.0'
+    implementation 'org.apache.bcel:bcel:6.5.0'
+    //Zip/Unzip
+    implementation 'net.lingala.zip4j:zip4j:2.9.1'
     /******************************************************************************************************************/
 
 
@@ -75,6 +106,8 @@ dependencies {
      *                                                Unit Tests                                                       *
      ******************************************************************************************************************/
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'  //junit5
+    testImplementation 'org.mockito:mockito-core:4.3.1'  //powerful mocking
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'  //mockito for junit5
     testImplementation 'org.hamcrest:hamcrest:2.2'  //powerful assertions
     /******************************************************************************************************************/
 
@@ -82,23 +115,22 @@ dependencies {
     /*******************************************************************************************************************
      *                                                Integration Tests                                                *
      ******************************************************************************************************************/
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'  //Spring Context in tests
+    integratedUnitTestImplementation 'org.springframework.boot:spring-boot-starter-test'  //Spring Context in tests
     /******************************************************************************************************************/
 
 
     /*******************************************************************************************************************
-     *                                                Functional Tests                                                 *
+     *                                                System Tests                                                     *
      ******************************************************************************************************************/
     //tbd
     /******************************************************************************************************************/
 
 
     /*******************************************************************************************************************
-     *                                                UI Tests                                                         *
+     *                                                System Web UI Test                                               *
      ******************************************************************************************************************/
-    uiTestImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'    //junit5
-    //Selenide
-    uiTestImplementation 'com.codeborne:selenide:6.3.4'
+    uiWebTestImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'    //junit5
+    uiWebTestImplementation 'com.codeborne:selenide:6.3.4'    //Selenide
     /******************************************************************************************************************/
 }
 
@@ -107,20 +139,62 @@ application {
     mainClass = 'kaniaveha.aliaksei.citadel.App'
 }
 
+def execDocker(String arguments) {
+    exec {
+        executable 'docker'
+        args arguments.split(' ')
+    }
+}
+
+task buildImage {
+    dependsOn build
+    doLast {
+        execDocker('build -f containers/citadel-app.dockerfile -t citadel-app .')
+    }
+}
+
+task runInContainer {
+    dependsOn buildImage
+    doLast {
+        execDocker('run -d -p 8080:8080 citadel-app')
+    }
+}
+
+task runInContainerDebug {
+    dependsOn buildImage
+    doLast {
+        execDocker("run -d -p 8080:8080 -p 5050:5050 -e CITADEL_OPTS='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5050' citadel-app")
+    }
+}
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
 
-tasks.register('uiTest', Test) {
+task integratedUnitTest(type: Test) {
+    description = 'Runs integratied units tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integratedUnitTest.output.classesDirs
+    classpath = sourceSets.integratedUnitTest.runtimeClasspath
+
+    useJUnitPlatform()
+}
+
+task uiWebTest(type: Test) {
     description = 'Runs UI tests.'
     group = 'verification'
 
-    testClassesDirs = sourceSets.uiTest.output.classesDirs
-    classpath = sourceSets.uiTest.runtimeClasspath
+    testClassesDirs = sourceSets.uiWebTest.output.classesDirs
+    classpath = sourceSets.uiWebTest.runtimeClasspath
 
     useJUnitPlatform()
 
     //propagate system properties so args of the form -D<key>=<val> can be used in tests
     systemProperties(System.getProperties())
+}
+
+task runAllTests {
+    dependsOn test, integratedUnitTest, uiWebTest
 }
