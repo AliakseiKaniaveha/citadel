@@ -1,7 +1,7 @@
 package kaniaveha.aliaksei.citadel.facade;
 
 import guru.nidi.graphviz.model.Graph;
-import kaniaveha.aliaksei.citadel.Toolbox;
+import kaniaveha.aliaksei.citadel.integratedtest.Toolbox;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

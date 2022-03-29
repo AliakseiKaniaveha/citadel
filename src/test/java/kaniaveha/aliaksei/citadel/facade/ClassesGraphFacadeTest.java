@@ -48,14 +48,26 @@ class ClassesGraphFacadeTest {
     Graph graph = mock(Graph.class);
     given(graphService.buildGraph(asList(classDefinition1, classDefinition2))).willReturn(graph);
 
-    File graphFile = mock(File.class);
-    given(graphService.render(graph, "FORMAT")).willReturn(graphFile);
-    given(graphFile.getPath()).willReturn("path/to/rendered/graph.file");
+    given(graphService.render(graph, "svg"))
+        .willReturn(
+            """
+            <svg>
+              <g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0.0) translate(4.0 400.0)">
+                <polygon fill="white" stroke="transparent" points="-4,4 -4,-400 15029.87,-400 15029.87,4 -4,4"/>
+              </g>
+            </svg>
+            """);
 
     // when
-    String actual = testee.visualiseOwnClasses("FORMAT");
+    String actual = testee.visualiseOwnClasses("svg");
 
     // then
-    assertThat(actual, equalTo("path/to/rendered/graph.file"));
+    assertThat(actual, equalTo("""
+            <svg>
+              <g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0.0) translate(4.0 400.0)">
+                <polygon fill="white" stroke="transparent" points="-4,4 -4,-400 15029.87,-400 15029.87,4 -4,4"/>
+              </g>
+            </svg>
+            """));
   }
 }

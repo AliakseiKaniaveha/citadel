@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.citadel;
+package kaniaveha.aliaksei.citadel.integratedtest;
 
 import java.io.File;
 import java.net.URL;
