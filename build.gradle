@@ -99,6 +99,8 @@ dependencies {
     implementation 'org.apache.bcel:bcel:6.5.0'
     //Zip/Unzip
     implementation 'net.lingala.zip4j:zip4j:2.9.1'
+    //Work with html
+    implementation 'org.jsoup:jsoup:1.14.3'
     /******************************************************************************************************************/
 
 
@@ -147,7 +149,7 @@ def execDocker(String arguments) {
 }
 
 task buildImage {
-    dependsOn build
+    dependsOn assemble
     doLast {
         execDocker('build -f containers/citadel-app.dockerfile -t citadel-app .')
     }

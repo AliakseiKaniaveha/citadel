@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.cssClass;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -25,9 +25,15 @@ public class SmokeSpec {
     // then link to graph displayed
     SelenideElement linkToGraph = $(By.id("navigate-to-classes-graph"));
 
-    // and it navigates to another page
+    // and it navigates to classes graph
     linkToGraph.click();
-    SelenideElement graphPageContent = $(By.tagName("body"));
-    graphPageContent.shouldHave(text("This is classes graph"));
+
+    //and classes graph is a SVG
+    SelenideElement svgTag = $(By.id("svg"));
+    svgTag.shouldHave(cssClass("svg"));
+
+    SelenideElement gTag = svgTag.find(By.id("graph0"));
+    gTag.shouldHave(cssClass("graph"));
+    assert gTag.getTagName().equals("g");
   }
 }

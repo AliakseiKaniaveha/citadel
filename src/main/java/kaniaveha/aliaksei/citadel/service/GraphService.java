@@ -5,19 +5,26 @@ import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.model.Graph;
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.model.Node;
+import kaniaveha.aliaksei.citadel.Toolbox;
+import kaniaveha.aliaksei.citadel.VisibleForTesting;
 import kaniaveha.aliaksei.citadel.model.ClassDefinition;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Attributes;
+import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 
 import static guru.nidi.graphviz.model.Factory.mutGraph;
 import static guru.nidi.graphviz.model.Factory.node;
 
-/** Classes graph related actions. */
+/** Graphs related actions. */
 @Service
 public class GraphService {
+
+  @Autowired private Renderer renderer;
+
   public Graph buildGraph(Collection<ClassDefinition> classDefinitionList) {
     MutableGraph graph = mutGraph().setDirected(true);
 
@@ -32,14 +39,33 @@ public class GraphService {
     return graph.toImmutable();
   }
 
-  public File render(Graph graph, String formatStr) {
-    try {
-      Format format = Format.valueOf(formatStr);
-      return Graphviz.fromGraph(graph)
-          .render(format)
-          .toFile(File.createTempFile("graph", format.fileExtension));
-    } catch (IOException e) {
-      throw new IllegalStateException(e);
+  public String render(Graph graph, String formatStr) {
+    Format format = Format.valueOf(formatStr.toUpperCase());
+    String rendered = renderer.render(graph, format);
+    return postProcess(rendered, format);
+  }
+
+  private String postProcess(String rendered, Format format) {
+    if (format.equals(Format.SVG)) {
+      Element svgTag =
+          Toolbox.extractSingleton(
+              Jsoup.parse(rendered).body().getElementsByTag("svg"),
+              "Rendered svg does not contain <svg> tag: " + rendered,
+              "Rendered svg contains more than one <svg> tag: " + rendered);
+      Attributes attributes = svgTag.attributes().clone();
+      svgTag.clearAttributes();
+      svgTag.attr("id", "svg").addClass("svg").attr("preserveAspectRatio", "xMidYMid meet");
+      svgTag.attributes().addAll(attributes);
+      return svgTag.toString();
+    }
+    return rendered;
+  }
+
+  @VisibleForTesting
+  @Service
+  static class Renderer {
+    public String render(Graph graph, Format format) {
+      return Graphviz.fromGraph(graph).render(format).toString();
     }
   }
 }

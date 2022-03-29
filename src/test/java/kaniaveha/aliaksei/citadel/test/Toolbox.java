@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.citadel;
+package kaniaveha.aliaksei.citadel.test;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;

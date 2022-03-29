@@ -1,6 +1,6 @@
 package kaniaveha.aliaksei.citadel.service;
 
-import kaniaveha.aliaksei.citadel.Toolbox;
+import kaniaveha.aliaksei.citadel.test.Toolbox;
 import kaniaveha.aliaksei.citadel.model.ClassDefinition;
 import org.junit.jupiter.api.Test;
 

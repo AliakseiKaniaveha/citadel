@@ -29,11 +29,11 @@ public class ClassesGraphFacade {
   public String visualiseOwnClasses(String format) {
     File myOwnJar = classesSourceService.getMyOwnJar();
     Graph graph = buildGraph(myOwnJar);
-    return graphService.render(graph, format).getPath();
+    return graphService.render(graph, format);
   }
 
   @VisibleForTesting
-  Graph buildGraph(File myOwnJar) {
+  public Graph buildGraph(File myOwnJar) {
     Collection<byte[]> classes = classesSourceService.getClasses(myOwnJar);
     List<ClassDefinition> classDefinitionList =
         classes.stream().map(byteCodeEngineeringService::toClassDefinition).toList();

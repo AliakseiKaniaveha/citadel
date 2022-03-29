@@ -3,9 +3,31 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="css/svg.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<p th:text="'This is classes graph'"/>
-<p th:text="${graphContent}"/>
+<div th:remove="tag" th:utext="${graphContent}"></div>
+
+<svg id="svg-scrim" class="svg svg-scrim">
+    <circle id="pivot" class="pivot" cx="0" cy="0" r="6" />
+</svg>
+
+<div class="controls">
+    <div class="info">
+        <ul>
+            <li>Left mouse button - pan</li>
+            <li>Right mouse button - rotate</li>
+            <li>Mouse wheel - zoom</li>
+        </ul>
+    </div>
+    <button id="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect controls-button">
+        Reset
+    </button>
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js'></script>
+<script src="js/svg.js"></script>
+
 </body>
 </html>
