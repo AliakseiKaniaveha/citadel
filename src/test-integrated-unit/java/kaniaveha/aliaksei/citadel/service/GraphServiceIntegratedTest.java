@@ -1,9 +1,10 @@
 package kaniaveha.aliaksei.citadel.service;
 
+import guru.nidi.graphviz.engine.Engine;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.model.Graph;
+import kaniaveha.aliaksei.citadel.toolbox.test.Toolbox;
 import kaniaveha.aliaksei.citadel.facade.ClassesGraphFacade;
-import kaniaveha.aliaksei.citadel.integratedtest.Toolbox;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,11 +25,11 @@ class GraphServiceIntegratedTest {
   void rendersGraphInGivenFormat() {
     // given
     Graph graph = classesGraphFacade.buildGraph(Toolbox.getTestResource("twoClasses.jar"));
-    given(graphServiceRenderer.render(graph, Format.SVG)).willReturn("""
+    given(graphServiceRenderer.render(graph, Engine.DOT, Format.SVG)).willReturn("""
             <svg attr="val"></svg>""");
 
     // when
-    String actualSvg = testee.render(graph, "svg");
+    String actualSvg = testee.render(graph, "dot", "svg");
 
     // then
     assertThat(

@@ -48,7 +48,7 @@ class ClassesGraphFacadeTest {
     Graph graph = mock(Graph.class);
     given(graphService.buildGraph(asList(classDefinition1, classDefinition2))).willReturn(graph);
 
-    given(graphService.render(graph, "svg"))
+    given(graphService.render(graph,  "dot", "svg"))
         .willReturn(
             """
             <svg>
@@ -59,7 +59,7 @@ class ClassesGraphFacadeTest {
             """);
 
     // when
-    String actual = testee.visualiseOwnClasses("svg");
+    String actual = testee.visualiseOwnClasses("dot", "svg");
 
     // then
     assertThat(actual, equalTo("""

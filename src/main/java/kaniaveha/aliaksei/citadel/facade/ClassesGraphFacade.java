@@ -26,10 +26,10 @@ public class ClassesGraphFacade {
   /**
    * @return visualisation of classes graph
    */
-  public String visualiseOwnClasses(String format) {
+  public String visualiseOwnClasses(String engine, String format) {
     File myOwnJar = classesSourceService.getMyOwnJar();
     Graph graph = buildGraph(myOwnJar);
-    return graphService.render(graph, format);
+    return graphService.render(graph, engine, format);
   }
 
   @VisibleForTesting

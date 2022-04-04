@@ -1,15 +1,18 @@
 package kaniaveha.aliaksei.citadel.facade;
 
-import guru.nidi.graphviz.model.Graph;
-import kaniaveha.aliaksei.citadel.integratedtest.Toolbox;
+import guru.nidi.graphviz.model.MutableGraph;
+import guru.nidi.graphviz.model.MutableNode;
+import kaniaveha.aliaksei.citadel.toolbox.test.Toolbox;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
+import java.util.Collection;
 
+import static kaniaveha.aliaksei.citadel.toolbox.test.Toolbox.Grpahs.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 @SpringBootTest
 class ClassesGraphFacadeIntegratedTest {
@@ -22,20 +25,31 @@ class ClassesGraphFacadeIntegratedTest {
     File jar = Toolbox.getTestResource("twoClasses.jar");
 
     // when
-    Graph graph = testee.buildGraph(jar);
+    MutableGraph graph = (MutableGraph) testee.buildGraph(jar);
 
     // then
-    assertThat(graph.toString(), equalTo("""
-            digraph {
-            "test.dependencies.ClassWithDependencies" -> "java.io.File"
-            "test.dependencies.ClassWithDependencies" -> "javax.tools.ToolProvider"
-            "test.dependencies.ClassWithDependencies" -> "java.nio.file.Path"
-            "test.dependencies.ClassWithDependencies" -> "java.util.LinkedList"
-            "test.dependencies.ClassWithDependencies" -> "java.lang.String"
-            "test.dependencies.ClassWithDependencies" -> "java.io.IOException"
-            "test.dependencies.ClassWithDependencies" -> "java.util.Collection"
-            "test.dependencies.ClassWithDependencies" -> "javax.tools.OptionChecker"
-            "test.dependencies.ClassWithoutDependencies" -> "java.lang.Object"
-            }"""));
+    Collection<MutableNode> nodes = graph.rootNodes();
+    assertThat(
+        toNames(nodes),
+        containsInAnyOrder(
+            "test.dependencies.ClassWithDependencies",
+            "test.dependencies.ClassWithoutDependencies"));
+
+    MutableNode withoutDependencies = findNode("test.dependencies.ClassWithoutDependencies", nodes);
+    assertThat(
+        toNames(getLinkedNodes(withoutDependencies)), containsInAnyOrder("java.lang.Object"));
+
+    MutableNode withDependencies = findNode("test.dependencies.ClassWithDependencies", nodes);
+    assertThat(
+        toNames(getLinkedNodes(withDependencies)),
+        containsInAnyOrder(
+            "java.io.File",
+            "javax.tools.ToolProvider",
+            "java.nio.file.Path",
+            "java.util.LinkedList",
+            "java.lang.String",
+            "java.io.IOException",
+            "java.util.Collection",
+            "javax.tools.OptionChecker"));
   }
 }
