@@ -6,6 +6,8 @@
 plugins {
     //Apply the application plugin to build and distribute Java app
     id 'application'
+    //Groovyused for tests
+    id 'groovy'
 
     //Spring Boot
     //doesn't applied to all configurations as we need it for implementation only
@@ -57,8 +59,8 @@ sourceSets {
         }
     }
     systemTest {
-        java {
-            srcDirs = ['src/test-system/java']
+        groovy {
+            srcDirs = ['src/test-system/groovy']
         }
     }
     uiWebTest {
@@ -73,7 +75,7 @@ configurations {
     integratedUnitTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
-idea {
+/*idea {
     module {
         //testSourceDirs += sourceSets.test.java.srcDirs - unit tests are defined by default
         testSourceDirs += sourceSets.integratedUnitTest.java.srcDirs
@@ -81,7 +83,7 @@ idea {
         testSourceDirs += sourceSets.systemTest.java.srcDirs
         testSourceDirs += sourceSets.uiWebTest.java.srcDirs
     }
-}
+}*/
 
 dependencies {
 
@@ -109,7 +111,7 @@ dependencies {
      ******************************************************************************************************************/
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'  //junit5
     testImplementation 'org.mockito:mockito-core:4.3.1'  //powerful mocking
-    testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'  //mockito for junit5
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.3.1'  //mockito for junit5
     testImplementation 'org.hamcrest:hamcrest:2.2'  //powerful assertions
     /******************************************************************************************************************/
 
@@ -125,14 +127,17 @@ dependencies {
      *                                                System Tests                                                     *
      ******************************************************************************************************************/
     //tbd
+    systemTestImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'  //junit5
+    systemTestImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
+    systemTestImplementation 'org.codehaus.groovy:groovy-all:3.0.10'
     /******************************************************************************************************************/
 
 
     /*******************************************************************************************************************
-     *                                                System Web UI Test                                               *
+     *                                                UI Web Tests                                                     *
      ******************************************************************************************************************/
     uiWebTestImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'    //junit5
-    uiWebTestImplementation 'com.codeborne:selenide:6.3.4'    //Selenide
+    uiWebTestImplementation 'com.codeborne:selenide:6.3.5'    //Selenide
     /******************************************************************************************************************/
 }
 
@@ -155,22 +160,21 @@ task buildImage {
     }
 }
 
-task runInContainer {
+task rebuildAndRun {
     dependsOn buildImage
     doLast {
         execDocker('run -d -p 8080:8080 citadel-app')
     }
 }
 
-task runInContainerDebug {
+task rebuildAndRunDebug {
     dependsOn buildImage
     doLast {
         execDocker("run -d -p 8080:8080 -p 5050:5050 -e CITADEL_OPTS='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5050' citadel-app")
     }
 }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
+test {
     useJUnitPlatform()
 }
 
@@ -182,6 +186,19 @@ task integratedUnitTest(type: Test) {
     classpath = sourceSets.integratedUnitTest.runtimeClasspath
 
     useJUnitPlatform()
+}
+
+task systemTest(type: Test) {
+    description = 'Runs System tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.systemTest.output.classesDirs
+    classpath = sourceSets.systemTest.runtimeClasspath
+
+    useJUnitPlatform()
+
+    //propagate system properties so args of the form -D<key>=<val> can be used in tests
+    systemProperties(System.getProperties())
 }
 
 task uiWebTest(type: Test) {
@@ -198,5 +215,5 @@ task uiWebTest(type: Test) {
 }
 
 task runAllTests {
-    dependsOn test, integratedUnitTest, uiWebTest
+    dependsOn test, integratedUnitTest, systemTest, uiWebTest
 }

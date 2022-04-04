@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.citadel;
+package kaniaveha.aliaksei.citadel.toolbox;
 
 import java.util.Iterator;
 

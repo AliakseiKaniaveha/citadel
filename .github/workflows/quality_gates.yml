@@ -86,6 +86,29 @@ jobs:
         with:
           gradle-version: 7.2
           arguments: integratedUnitTest --info
+  system-tests:
+    name: System Tests
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+      - name: Run Application
+        run: ./gradlew rebuildAndRun --info
+      - name: Run Tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+          arguments: systemTest --info
   ui-web-tests:
     name: Web UI Tests
     runs-on: ubuntu-latest
@@ -102,8 +125,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.2
-      - name: Run Application in container
-        run: ./gradlew runInContainer --info
+      - name: Run Application
+        run: ./gradlew rebuildAndRun --info
       - name: Install Web Browser
         run: |
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -122,12 +145,14 @@ jobs:
       - is-bypassed-check
       - unit-tests
       - integrated-unit-tests
+      - system-tests
       - ui-web-tests
     steps:
       - name: Quality Gates Report
         run: |
           echo "Unit Tests: ${{ toJSON(needs.unit-tests) }}"
           echo "Unit Tests: ${{ toJSON(needs.integrated-unit-tests) }}"
+          echo "System Tests: ${{ toJSON(needs.system-tests) }}"
           echo "UI-Web Tests: ${{ toJSON(needs.ui-web-tests) }}"
       - name: Quality Gates bypassed
         if: ${{ needs.is-bypassed-check.outputs.is-bypassed == 'true' }}
@@ -137,6 +162,7 @@ jobs:
           needs.is-bypassed-check.outputs.is-bypassed != 'true' &&
           (needs.unit-tests.result != 'success' ||
           needs.integrated-unit-tests.result != 'success' ||
+          needs.system-tests.result != 'success' ||
           needs.ui-web-tests.result != 'success')
           }}
         run: |
