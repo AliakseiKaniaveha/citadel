@@ -18,7 +18,7 @@ public class SmokeSpec {
   }
 
   @Test
-  void smokeTest() {
+  void classesGraphVisualized() {
     // when landing page loaded
     open("/");
 
@@ -28,7 +28,7 @@ public class SmokeSpec {
     // and it navigates to classes graph
     linkToGraph.click();
 
-    //and classes graph is a SVG
+    // and classes graph is a SVG
     SelenideElement svgTag = $(By.id("svg"));
     svgTag.shouldHave(cssClass("svg"));
 
