@@ -7,10 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.cssClass;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
-public class SmokeSpec {
+public class ClassesGraphSpec {
 
   @BeforeAll
   static void beforeAll() {
@@ -27,6 +26,7 @@ public class SmokeSpec {
 
     // and it navigates to classes graph
     linkToGraph.click();
+    switchTo().window("Citadel: Classes Graph");
 
     // and classes graph is a SVG
     SelenideElement svgTag = $(By.id("svg"));
