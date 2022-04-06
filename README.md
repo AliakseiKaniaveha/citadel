@@ -2,74 +2,74 @@
 
 # The Citadel Project
 
-We do believe in:
+This is an educational project which states that software properly guarded by automated tests is a considerably more
+sustainable and superior kind than software which lacks them. It can adopt any changes and have new features released to
+production [safely](#release-safely) and [quickly](#release-quickly), it's always in a
+[working state](#develop-efficiently) (no matter whether it is production or development) and anyone can start
+contributing in [less than 5 minutes](#get-started). The mission is to give it a taste of what it's like to develop
+software in that manner and our hope is that after that anyone tried it will consider this way to develop software as a
+de-facto standard and will bring this experience to their production projects.
 
-* **Automated Tests.** Each application function is covered by set automated tests (see Test Pyramid). Code changes that
-  lacks of tests shall not pass code review.
-* **Clean Code.** In terms
-  of [Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
-  .
-* **Continuous Integration.** There is no chance to break already working function as **each** incoming change verified
-  **automatically**. Breaking changes shall not pass.
+To get the idea of the application itself just check it out here http://34.118.91.30:8080.
 
-## Description
+# How to Make It Happen
 
-This project is an opinionated view on a way of developing Java-based applications leveraging **the power of automated
-tests** . Though, concepts are not Java-specific, tools and showcases are, so have to have this caveat.
+Basically the only two principles have to be enforced:
 
-We are putting automated tests at the forefront. We believe that treating tests as a must gives us not only obvious
-benefits like improved maintainability and decreased support costs, but forces a project to be in an extremely healthy
-and competitive state - see [Benefits](#benefits) section.
+* **Automated Tests.** Each code change must be fully covered with [automated tests](doc/testPyramid)
+  . [No exceptions](.github/workflows/quality_gates.skip.reasons). Ensured by Code Review.
+* **Quality Gates.** Automated tests are crucial, but they are not sufficient by itself. They must be run on each
+  integration to the production branch, all the tests must be green, only in this case the change can be integrated.
+  Ensured by [CI pipeline](.github/workflows/quality_gates.yml).
 
-An application itself is _to be formulted_ - [documentation](doc/index.md). 
+That's it, just two points. But it's naturally outcomes into: [quick start](#get-started),
+[safe releases](#release-safely), [quick releases](#release-quickly), [stable working environment](#develop-efficiently)
+, an environment welcome to [refactoring](#refactoring-is-welcome) and [experimenting](#experimenting-is-welcome).
 
-## Goals
+## Get Started
 
-This project has two goals:
+To contribute or just to get a running instance locally all you need is SDK
+([java](https://openjdk.java.net/projects/jdk/17/)), Containers Management Tool ([docker](https://www.docker.com/))
+and Build Tool ([gradle](https://gradle.org/)). After that checkout the repository you are all set, just
+execute `rebuildAndRun` gradle task (or for those who are not familiar with gradle
+[rebuildAndRun.cmd](scripts/rebuildAndRun.cmd) is in place). Debug available via `rebuildAndRunDebug`.
 
-* **Share our ideas.** _Talk is cheap. Show me the code._ - L.Torvalds. We believe that for a software engineer showing
-  the code is the easiest and quickest way to get the message.
-* **Proof our ideas.** We want to have a handbook containing set of **working** examples demonstrating how to
-  incorporate CI and all layers of the Test Pyramid dealing with one or another technology.
+## Why Does It Matter
 
-## Benefits
+### Release Safely
 
-* _Application is 'evergreen'._ There is no chance to break already working function as each incoming change verified
-  automatically.
-* _Anyone can contribute safely._ There is no chance to break... Well, you get it. As an outcome - friendly and
-  comfortable working environment assuming no overtimes and late night stays.
-* _Anyone can contribute quickly._ All you need is access to the repository, afterwards you can get running application
-  instance by running a single command. All functions are documented in form of automated functional tests and, what is
-  even more important, all configurations/pre-sets required to reach a function are already in place (it has to be to
-  fulfill tests on CI) - so **any function** available for debug/investigation **immediately**. The same is valid for
-  application configuration settings and external dependencies.
-* _Refactoring of any complexity is encouraged and welcome._ No chance to break anything, right? You want to clean up
-  some code? New feature begs for re-design first? Or you'd like just raise a version of a library and get the latest
-  perks? Just fire away - you don't even need to validate your changes locally (not speaking of 'full regression run')
-  before creating a pull-request.
-* _Experimenting is safe and encouraged._ Pretty much connected to the previous one. Want to replace your ORM? Database
-  vendor? Try the latest Java version? Just make a change and get feedback on how many functions are failed. Oops, it
-  seems you just have completed a PoC task :)
+Guarded by the Quality Gates, the functionality already released is guaranteed not to be broken by a new drop.
 
-## Test Pyramid
+### Release Quickly
 
-TBD - describe on high-level the 4 levels of automated tests, difference between them, touch contract tests.
+Any change is ready for production right after it's integrated to production branch - no need to manually test it as
+it's already covered by automated tests (Exploratory would be nice though, but still not a 'must have' - sense it
+depending on the nature of the change). Regression testing? Yep, it's already done by the Quality Gates. You are good to
+go.
 
-### Unit Tests
+### Develop Efficiently
 
-TBD
+The fact Quality Gates require the ability to be deployed from scratch on ephemeral environment (see
+[System Tests](doc/testPyramid.md#system-tests)) leads to two positive side effects. The first is as it is guaranteed to
+be deployable from scratch, then it's trivially to deploy locally. The second is the enforcement of so called 'as Code'
+principles - Infrastructure as Code, Configuration as Code, etc. That means that there is no more headache to get proper
+settings locally, chase of configuration drift and manual overrides - any attempt of manual intervention would cause
+tests failures.
 
-### Integrated Unit Tests
+Besides that, application is stable at any point of time - you can pull the latest version of the main branch and all
+the functionality expected to work - works, it's again guaranteed by the Automated Tests + Quality Gates pair.
 
-TBD
+### Refactoring is Welcome
 
-### Functional Tests
+It doesn't matter if you'd like just to clean up a class code a bit or fully re-design this messy module and finally
+untangle this spaghetti ball into a clean and clear structure. You can act absolutely confidently in both cases as there
+is no chance to bring any regression - it will be caught by the Quality Gates.
 
-TBD
+### Experimenting is Welcome
 
-### UI Tests
-
-TBD
+Pretty much similar to the previous point. It's time to upgrade to the latest Java version? A brand-new library promises
+a lot of perks, but how much regression should we expect once it's in place? Just make a change and get near real-time
+feedback on how many functions are broken. Oops, it seems you just have completed the PoC task. Don't tell your boss :)
 
 ## Based on
 

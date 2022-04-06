@@ -163,14 +163,24 @@ task buildImage {
 task rebuildAndRun {
     dependsOn buildImage
     doLast {
-        execDocker('run -d -p 8080:8080 citadel-app')
+        try {
+            execDocker('rm -f citadel-app')
+        } catch (Exception e) {
+            //ignore failure if no container were running
+        }
+        execDocker('run -d -p 8080:8080 --name citadel-app citadel-app')
     }
 }
 
 task rebuildAndRunDebug {
     dependsOn buildImage
     doLast {
-        execDocker("run -d -p 8080:8080 -p 5050:5050 -e CITADEL_OPTS='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5050' citadel-app")
+        try {
+            execDocker('rm -f citadel-app')
+        } catch (Exception e) {
+            //ignore failure if no container were running
+        }
+        execDocker("run -d -p 8080:8080 -p 5050:5050 -e CITADEL_OPTS='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5050' --name citadel-app citadel-app")
     }
 }
 
