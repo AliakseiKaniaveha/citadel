@@ -16,7 +16,7 @@ To get the idea of the application itself just check it out here http://34.118.9
 
 Basically the only two principles have to be enforced:
 
-* **Automated Tests.** Each code change must be fully covered with [automated tests](doc/testPyramid)
+* **Automated Tests.** Each code change must be fully covered with [automated tests](doc/testpyramid/testPyramid.md)
   . [No exceptions](.github/workflows/quality_gates.skip.reasons). Ensured by Code Review.
 * **Quality Gates.** Automated tests are crucial, but they are not sufficient by itself. They must be run on each
   integration to the production branch, all the tests must be green, only in this case the change can be integrated.
@@ -50,7 +50,7 @@ go.
 ### Develop Efficiently
 
 The fact Quality Gates require the ability to be deployed from scratch on ephemeral environment (see
-[System Tests](doc/testPyramid.md#system-tests)) leads to two positive side effects. The first is as it is guaranteed to
+[System Tests](doc/testpyramid/testPyramid.md#system-tests)) leads to two positive side effects. The first is as it is guaranteed to
 be deployable from scratch, then it's trivially to deploy locally. The second is the enforcement of so called 'as Code'
 principles - Infrastructure as Code, Configuration as Code, etc. That means that there is no more headache to get proper
 settings locally, chase of configuration drift and manual overrides - any attempt of manual intervention would cause
