@@ -184,6 +184,14 @@ task rebuildAndRunDebug {
     }
 }
 
+task releaseToProduction {
+    dependsOn assemble
+    doLast {
+        execDocker('build -f containers/citadel-app.dockerfile -t epamaliakseikaniaveha/citadel-app .')
+        execDocker('push epamaliakseikaniaveha/citadel-app')
+    }
+}
+
 test {
     useJUnitPlatform()
 }

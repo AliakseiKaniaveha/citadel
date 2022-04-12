@@ -51,9 +51,9 @@ go.
 
 The fact Quality Gates require the ability to be deployed from scratch on ephemeral environment (see
 [System Tests](doc/testpyramid/testPyramid.md#system-tests)) leads to two positive side effects. The first is as it is guaranteed to
-be deployable from scratch, then it's trivially to deploy locally. The second is the enforcement of so called 'as Code'
+be deployable from scratch, then it's trivial to deploy locally. The second is enforcement of the so called 'as Code'
 principles - Infrastructure as Code, Configuration as Code, etc. That means that there is no more headache to get proper
-settings locally, chase of configuration drift and manual overrides - any attempt of manual intervention would cause
+settings locally, chasing configuration drift and manual overrides - any attempt of manual intervention would cause
 tests failures.
 
 Besides that, application is stable at any point of time - you can pull the latest version of the main branch and all

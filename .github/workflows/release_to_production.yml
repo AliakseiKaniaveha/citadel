@@ -1,0 +1,22 @@
+name: Release to Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  system-tests:
+    name: Release to Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+      - name: Run Application
+        run: ./gradlew releaseToProduciton --info
