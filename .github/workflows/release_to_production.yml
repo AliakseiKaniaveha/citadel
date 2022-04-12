@@ -14,9 +14,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Setup Gradle
+      - name: Build App
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.2
-      - name: Run Application
-        run: ./gradlew releaseToProduciton --info
+          arguments: build -x test --info
+      - name: Build Image and Push
+        run: |
+          docker login -u epamaliakseikaniaveha -p '${{ secrets.DOCKERPASSWORD }}'
+          docker build -f containers/citadel-app.dockerfile -t epamaliakseikaniaveha/citadel-app:0.0.1 .
+          docker push epamaliakseikaniaveha/citadel-app:0.0.1
