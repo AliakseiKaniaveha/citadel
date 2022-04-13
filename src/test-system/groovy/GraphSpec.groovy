@@ -9,7 +9,7 @@ class GraphSpec extends Specification {
     def 'Visualises classes graph in svg'() {
         given:
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:8080/classes-graph/visualisation")).GET().build()
+        HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:8080/rest/v1/classes-graph/visualisation")).GET().build()
 
         when:
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -22,7 +22,7 @@ class GraphSpec extends Specification {
     def 'Builds correct classes graph'() {
         given: 'app up and running'
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:8080/classes-graph/visualisation?format=dot")).GET().build()
+        HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:8080/rest/v1/classes-graph/visualisation?format=dot")).GET().build()
 
         when: 'graph visualization requested'
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
