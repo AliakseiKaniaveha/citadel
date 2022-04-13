@@ -8,22 +8,23 @@ jobs:
     name: Release to Production
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Docker Login
         run: |
           docker login -u epamaliakseikaniaveha -p '${{ secrets.DOCKERPASSWORD }}'
       - name: Check if not released yet
         run: |
-          docker manifest inspect epamaliakseikaniaveha/citadel-app:0.0.5 &> manifest.out || true
+          version=$(cat src/main/resources/version)
+          docker manifest inspect epamaliakseikaniaveha/citadel-app:$version &> manifest.out || true
           manifestResult=$(cat manifest.out)
           if [[ "$manifestResult" == *"no such manifest"* ]];
           then
-            echo '0.0.5 not released yet, good to go';
+            echo $version 'not released yet, good to go';
           else
-            echo '0.0.5 version already released, check https://hub.docker.com/repository/docker/epamaliakseikaniaveha/citadel-app'
+            echo $version 'version already released, check https://hub.docker.com/repository/docker/epamaliakseikaniaveha/citadel-app'
             echo 'To raise version update https://github.com/AliakseiKaniaveha/citadel/blob/master/src/main/resources/version'
             exit 1;
           fi
-      - uses: actions/checkout@v2
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
@@ -36,6 +37,7 @@ jobs:
           arguments: build -x test --info
       - name: Build Image and Push
         run: |
-          docker build -f containers/citadel-app.dockerfile -t epamaliakseikaniaveha/citadel-app:0.0.5 -t epamaliakseikaniaveha/citadel-app:latest .
-          docker push epamaliakseikaniaveha/citadel-app:0.0.5
+          version=$(cat src/main/resources/version)
+          docker build -f containers/citadel-app.dockerfile -t epamaliakseikaniaveha/citadel-app:$version -t epamaliakseikaniaveha/citadel-app:latest .
+          docker push epamaliakseikaniaveha/citadel-app:$version
           docker push epamaliakseikaniaveha/citadel-app:latest
