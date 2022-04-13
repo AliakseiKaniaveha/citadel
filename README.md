@@ -10,7 +10,7 @@ contributing in [less than 5 minutes](#get-started). The mission is to give it a
 software in that manner and our hope is that after that anyone tried it will consider this way to develop software as a
 de-facto standard and will bring this experience to their production projects.
 
-To get the idea of the application itself just check it out here http://34.118.91.30:8080.
+To get the idea of the application itself just check it out here http://citadelproject.tech.
 
 # How to Make It Happen
 
@@ -34,6 +34,17 @@ and Build Tool ([gradle](https://gradle.org/)). After that checkout the reposito
 execute `rebuildAndRun` gradle task (or for those who are not familiar with gradle
 [rebuildAndRun.cmd](scripts/rebuildAndRun.cmd) is in place). Debug available via `rebuildAndRunDebug`.
 
+## Release to Production
+
+- update [version](src/main/resources/version) and merge it to master
+- run https://github.com/AliakseiKaniaveha/citadel/actions/workflows/release_to_production.yml
+- that's it :) - see for yourself http://citadelproject.tech/rest/v1/version just in few seconds
+
+The workflow builds and pushes an image to https://hub.docker.com/repository/docker/epamaliakseikaniaveha/citadel-app,
+[Watchtower](https://containrrr.dev/watchtower/) pulls it down, gracefully shuts down existing container and restarts
+it.
+
+
 ## Why Does It Matter
 
 ### Release Safely
@@ -50,11 +61,11 @@ go.
 ### Develop Efficiently
 
 The fact Quality Gates require the ability to be deployed from scratch on ephemeral environment (see
-[System Tests](doc/testpyramid/testPyramid.md#system-tests)) leads to two positive side effects. The first is as it is guaranteed to
-be deployable from scratch, then it's trivial to deploy locally. The second is enforcement of the so called 'as Code'
-principles - Infrastructure as Code, Configuration as Code, etc. That means that there is no more headache to get proper
-settings locally, chasing configuration drift and manual overrides - any attempt of manual intervention would cause
-tests failures.
+[System Tests](doc/testpyramid/testPyramid.md#system-tests)) leads to two positive side effects. The first is as it is
+guaranteed to be deployable from scratch, then it's trivial to deploy locally. The second is enforcement of the so
+called 'as Code' principles - Infrastructure as Code, Configuration as Code, etc. That means that there is no more
+headache to get proper settings locally, chasing configuration drift and manual overrides - any attempt of manual
+intervention would cause tests failures.
 
 Besides that, application is stable at any point of time - you can pull the latest version of the main branch and all
 the functionality expected to work - works, it's again guaranteed by the Automated Tests + Quality Gates pair.
