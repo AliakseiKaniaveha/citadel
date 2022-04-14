@@ -16,4 +16,10 @@ public class Toolbox {
     }
     return value;
   }
+
+  public static <T> T extractSingleton(
+      Iterable<T> iterable, String noOrMoreThanOneElementsErrorMessage) {
+    return extractSingleton(
+        iterable, noOrMoreThanOneElementsErrorMessage, noOrMoreThanOneElementsErrorMessage);
+  }
 }

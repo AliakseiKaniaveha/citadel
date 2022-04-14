@@ -1,10 +1,12 @@
 package kaniaveha.aliaksei.citadel.version;
 
+import kaniaveha.aliaksei.citadel.toolbox.Toolbox;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class VersionFacade {
@@ -13,13 +15,12 @@ public class VersionFacade {
    * @return application version in form major.minor.build, like 0.0.1.
    */
   public String getVersion() {
-    try {
-      return new BufferedReader(
-              new InputStreamReader(
-                  ClassLoader.getSystemClassLoader().getResourceAsStream("version")))
-          .readLine();
-    } catch (IOException e) {
-      throw new IllegalStateException(e);
-    }
+    List<String> lines =
+        new BufferedReader(
+                new InputStreamReader(
+                    ClassLoader.getSystemClassLoader().getResourceAsStream("version")))
+            .lines()
+            .collect(Collectors.toList());
+    return Toolbox.extractSingleton(lines, "Version file must have exactly one line");
   }
 }
