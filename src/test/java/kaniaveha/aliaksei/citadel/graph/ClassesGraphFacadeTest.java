@@ -1,10 +1,9 @@
-package kaniaveha.aliaksei.citadel.facade;
+package kaniaveha.aliaksei.citadel.graph;
 
 import guru.nidi.graphviz.model.Graph;
-import kaniaveha.aliaksei.citadel.model.ClassDefinition;
-import kaniaveha.aliaksei.citadel.service.ByteCodeEngineeringService;
-import kaniaveha.aliaksei.citadel.service.ClassesSourceService;
-import kaniaveha.aliaksei.citadel.service.GraphService;
+import kaniaveha.aliaksei.citadel.classes.ByteCodeEngineeringService;
+import kaniaveha.aliaksei.citadel.classes.ClassDefinition;
+import kaniaveha.aliaksei.citadel.classes.ClassesSourceService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

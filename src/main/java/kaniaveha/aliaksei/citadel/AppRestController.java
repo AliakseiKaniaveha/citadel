@@ -1,7 +1,7 @@
 package kaniaveha.aliaksei.citadel;
 
-import kaniaveha.aliaksei.citadel.facade.ClassesGraphFacade;
-import kaniaveha.aliaksei.citadel.version.VersionFacade;
+import kaniaveha.aliaksei.citadel.graph.ClassesGraphFacade;
+import kaniaveha.aliaksei.citadel.toolbox.VersionFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,7 +1,8 @@
-package kaniaveha.aliaksei.citadel.service;
+package kaniaveha.aliaksei.citadel.classes;
 
+import kaniaveha.aliaksei.citadel.classes.ByteCodeEngineeringService;
 import kaniaveha.aliaksei.citadel.toolbox.test.Toolbox;
-import kaniaveha.aliaksei.citadel.model.ClassDefinition;
+import kaniaveha.aliaksei.citadel.classes.ClassDefinition;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

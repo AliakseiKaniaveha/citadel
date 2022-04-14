@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.citadel.model;
+package kaniaveha.aliaksei.citadel.classes;
 
 import java.util.Set;
 

@@ -1,11 +1,10 @@
-package kaniaveha.aliaksei.citadel.facade;
+package kaniaveha.aliaksei.citadel.graph;
 
 import guru.nidi.graphviz.model.Graph;
-import kaniaveha.aliaksei.citadel.VisibleForTesting;
-import kaniaveha.aliaksei.citadel.model.ClassDefinition;
-import kaniaveha.aliaksei.citadel.service.ByteCodeEngineeringService;
-import kaniaveha.aliaksei.citadel.service.ClassesSourceService;
-import kaniaveha.aliaksei.citadel.service.GraphService;
+import kaniaveha.aliaksei.citadel.classes.ByteCodeEngineeringService;
+import kaniaveha.aliaksei.citadel.classes.ClassDefinition;
+import kaniaveha.aliaksei.citadel.classes.ClassesSourceService;
+import kaniaveha.aliaksei.citadel.toolbox.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

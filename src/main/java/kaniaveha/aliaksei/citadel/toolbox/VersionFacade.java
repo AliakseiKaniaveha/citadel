@@ -1,6 +1,5 @@
-package kaniaveha.aliaksei.citadel.version;
+package kaniaveha.aliaksei.citadel.toolbox;
 
-import kaniaveha.aliaksei.citadel.toolbox.Toolbox;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.citadel.version;
+package kaniaveha.aliaksei.citadel.toolbox;
 
 import org.junit.jupiter.api.Test;
 

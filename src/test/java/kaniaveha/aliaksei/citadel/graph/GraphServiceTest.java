@@ -1,11 +1,12 @@
-package kaniaveha.aliaksei.citadel.service;
+package kaniaveha.aliaksei.citadel.graph;
 
 import guru.nidi.graphviz.engine.Engine;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.model.Graph;
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.model.MutableNode;
-import kaniaveha.aliaksei.citadel.model.ClassDefinition;
+import kaniaveha.aliaksei.citadel.classes.ClassDefinition;
+import kaniaveha.aliaksei.citadel.graph.GraphService;
 import kaniaveha.aliaksei.citadel.toolbox.test.Toolbox;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
