@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.citadel.facade;
+package kaniaveha.aliaksei.citadel.graph;
 
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.model.MutableNode;

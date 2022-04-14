@@ -1,4 +1,4 @@
-package kaniaveha.aliaksei.citadel.service;
+package kaniaveha.aliaksei.citadel.graph;
 
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Size;
@@ -10,8 +10,8 @@ import guru.nidi.graphviz.model.Graph;
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.model.MutableNode;
 import kaniaveha.aliaksei.citadel.toolbox.Toolbox;
-import kaniaveha.aliaksei.citadel.VisibleForTesting;
-import kaniaveha.aliaksei.citadel.model.ClassDefinition;
+import kaniaveha.aliaksei.citadel.toolbox.VisibleForTesting;
+import kaniaveha.aliaksei.citadel.classes.ClassDefinition;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;

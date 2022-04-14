@@ -1,10 +1,11 @@
-package kaniaveha.aliaksei.citadel.service;
+package kaniaveha.aliaksei.citadel.graph;
 
 import guru.nidi.graphviz.engine.Engine;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.model.Graph;
+import kaniaveha.aliaksei.citadel.graph.GraphService;
 import kaniaveha.aliaksei.citadel.toolbox.test.Toolbox;
-import kaniaveha.aliaksei.citadel.facade.ClassesGraphFacade;
+import kaniaveha.aliaksei.citadel.graph.ClassesGraphFacade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

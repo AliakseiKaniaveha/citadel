@@ -1,5 +1,6 @@
-package kaniaveha.aliaksei.citadel.service;
+package kaniaveha.aliaksei.citadel.classes;
 
+import kaniaveha.aliaksei.citadel.classes.ClassesSourceService;
 import kaniaveha.aliaksei.citadel.toolbox.test.Toolbox;
 import org.junit.jupiter.api.Test;
 

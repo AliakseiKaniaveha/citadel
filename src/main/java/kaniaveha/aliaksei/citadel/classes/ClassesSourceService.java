@@ -1,6 +1,6 @@
-package kaniaveha.aliaksei.citadel.service;
+package kaniaveha.aliaksei.citadel.classes;
 
-import kaniaveha.aliaksei.citadel.VisibleForTesting;
+import kaniaveha.aliaksei.citadel.toolbox.VisibleForTesting;
 import net.lingala.zip4j.ZipFile;
 import org.springframework.stereotype.Service;
 

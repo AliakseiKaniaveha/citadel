@@ -1,6 +1,5 @@
-package kaniaveha.aliaksei.citadel.service;
+package kaniaveha.aliaksei.citadel.classes;
 
-import kaniaveha.aliaksei.citadel.model.ClassDefinition;
 import org.apache.maven.shared.dependency.analyzer.asm.DependencyClassFileVisitor;
 import org.apache.tomcat.util.bcel.classfile.ClassParser;
 import org.springframework.stereotype.Service;
